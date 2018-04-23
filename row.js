@@ -20,7 +20,13 @@ function Row(y, count, speed, obs_width, spacing, offset, inverted) {
   this.inverted = inverted;
   for(var i = 0; i < count; i++) {
     var x = i * spacing + offset;
-    this.obstacles.push(new Obstacle(x, y, obs_width, grid_size, speed));
+    if (count == 1) {
+      this.obstacles.push(new SafeArea(x, y, obs_width, grid_size, speed));
+    } else if(inverted) {
+      this.obstacles.push(new Obstacle(x, y, obs_width, grid_size, speed));
+    } else {
+      this.obstacles.push(new Platform(x, y, obs_width, grid_size, speed));
+    }
   }
 }
 

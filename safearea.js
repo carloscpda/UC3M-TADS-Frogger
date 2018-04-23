@@ -11,16 +11,16 @@
  * h: Obstacle height
  * s: x speed of the obstacle
  */
-function Obstacle(x, y, w, h, s) {
+function SafeArea(x, y, w, h, s) {
   Rectangle.call(this, x, y, w, h);
   this.speed = s;
 }
 
 // Extend Rectangle
-Obstacle.prototype = Object.create(Rectangle.prototype);
+SafeArea.prototype = Object.create(Rectangle.prototype);
 
 // Move this obstacle by its speed, and wrap it if off the screen.
-Obstacle.prototype.update = function() {
+SafeArea.prototype.update = function() {
   this.move(this.speed, 0);
   if(this.x > width + grid_size) {
     this.x = - this.w - grid_size;
@@ -31,7 +31,7 @@ Obstacle.prototype.update = function() {
 }
 
 // Display this obstacle.
-Obstacle.prototype.show = function() {
-  fill(200, 100, 0, 200);
+SafeArea.prototype.show = function() {
+  fill(0, 255, 0, 100);
   rect(this.x, this.y, this.w, this.h);
 }

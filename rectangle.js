@@ -30,6 +30,8 @@ Rectangle.prototype.intersects = function(other) {
 Rectangle.prototype.move = function(x, y) {
   this.x += x;
   this.y += y;
+  if (this.y < 0) this.y = 0;
+  if (this.y > 50 * 8) this.y = 50 * 8;
 }
 
 // Simple display of any rectangle
