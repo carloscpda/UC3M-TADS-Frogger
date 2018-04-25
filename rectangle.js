@@ -31,7 +31,7 @@ Rectangle.prototype.move = function(x, y) {
   this.x += x;
   this.y += y;
   if (this.y < 0) this.y = 0;
-  if (this.y > 50 * 8) this.y = 50 * 8;
+  if (this.y > grid_size * rows.length) this.y = grid_size * rows.length;
 }
 
 // Simple display of any rectangle

@@ -18,14 +18,15 @@ function Row(y, count, speed, obs_width, spacing, offset, inverted) {
   Rectangle.call(this, 0, y, width, grid_size);
   this.obstacles = [];
   this.inverted = inverted;
+  this.speed = speed;
   for(var i = 0; i < count; i++) {
     var x = i * spacing + offset;
-    if (count == 1) {
-      this.obstacles.push(new SafeArea(x, y, obs_width, grid_size, speed));
+    if (count === 1) {
+      this.obstacles.push(new SafeArea(x, y, obs_width, grid_size, this.speed));
     } else if(inverted) {
-      this.obstacles.push(new Obstacle(x, y, obs_width, grid_size, speed));
+      this.obstacles.push(new Obstacle(x, y, obs_width, grid_size, this.speed));
     } else {
-      this.obstacles.push(new Platform(x, y, obs_width, grid_size, speed));
+      this.obstacles.push(new Platform(x, y, obs_width, grid_size, this.speed));
     }
   }
 }
