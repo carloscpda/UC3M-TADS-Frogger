@@ -5,6 +5,7 @@
 var frog;
 var frog_img;
 var log_img;
+var log_2_img;
 
 var grid_size = 50;
 
@@ -18,6 +19,8 @@ function resetGame() {
 function preload() {
   frog_img = loadImage('imgs/frog.png');
   log_img = loadImage('imgs/log_150.png');
+  log_2_img = loadImage('imgs/log_200.png');
+  log_1_img = loadImage('imgs/log_100.png');
 }
 
 // p5js setup function, ran on page load.
@@ -45,7 +48,7 @@ function draw() {
   var intersects = null;
 
   for(var i = 0; i < rows.length; i++) {
-    rows[i].show(log_img);
+    rows[i].show(log_img, log_2_img, log_1_img);
     rows[i].update();
     if(frog.intersects(rows[i])) {
       intersects = rows[i].hits(frog);
