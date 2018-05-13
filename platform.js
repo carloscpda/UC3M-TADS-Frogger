@@ -31,7 +31,10 @@ Platform.prototype.update = function() {
 }
 
 // Display this obstacle.
-Platform.prototype.show = function() {
-  fill(255, 255, 0, 255);
-  rect(this.x, this.y, this.w, this.h);
+Platform.prototype.show = function(img, img_5) {
+  if (this.w === 100) {
+    image(img, this.x, this.y, this.w, this.h);
+  } else {
+    image(img_5, this.x, this.y, this.w, this.h);
+  }
 }

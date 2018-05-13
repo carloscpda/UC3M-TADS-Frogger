@@ -35,13 +35,13 @@ function Row(y, count, speed, obs_width, spacing, offset, inverted) {
 Row.prototype = Object.create(Rectangle.prototype);
 
 // Shows this Row, showing all obstacles on it.
-Row.prototype.show = function(log15, log2, log1) {
+Row.prototype.show = function(log15, log2, log1, car_img, car_5_img) {
   for(var i = 0; i < this.obstacles.length; i++) {
     if (this.obstacles[i] instanceof Obstacle) {
       this.obstacles[i].show(log15, log2, log1);
     }
     else if (this.obstacles[i] instanceof Platform){
-      this.obstacles[i].show();
+      this.obstacles[i].show(car_img, car_5_img);
     } else {
       this.obstacles[i].show();
     }
