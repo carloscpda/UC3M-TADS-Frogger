@@ -3,6 +3,7 @@
 // http://patreon.com/codingrainbow
 
 var frog;
+var frog_img;
 
 var grid_size = 50;
 
@@ -11,6 +12,10 @@ var rows = [];
 // Handles game reset if the frog dies, or at the initial load.
 function resetGame() {
   frog = new Frog(width / 2, height - grid_size, grid_size);
+}
+
+function preload() {
+  frog_img = loadImage('imgs/frog.png');
 }
 
 // p5js setup function, ran on page load.
@@ -50,7 +55,7 @@ function draw() {
 
   frog.attach(intersects);
   frog.update();
-  frog.show();
+  frog.show(frog_img);
 }
 
 // p5js key pressed function, runs when any key is pressed on the keyboard

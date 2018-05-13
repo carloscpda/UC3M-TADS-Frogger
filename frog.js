@@ -31,7 +31,6 @@ Frog.prototype.update = function() {
 }
 
 // Show the frog in the game window.
-Frog.prototype.show = function() {
-  fill(0, 255, 0, 200);
-  rect(this.x, this.y, this.w, this.h);
+Frog.prototype.show = function(img) {
+  image(img, this.x, this.y, this.w, this.h);
 }
