@@ -31,7 +31,6 @@ Obstacle.prototype.update = function() {
 }
 
 // Display this obstacle.
-Obstacle.prototype.show = function() {
-  fill(200, 100, 0, 200);
-  rect(this.x, this.y, this.w, this.h);
+Obstacle.prototype.show = function(log_img) {
+  image(log_img, this.x, this.y, this.w, this.h);
 }
