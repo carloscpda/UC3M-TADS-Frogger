@@ -8,6 +8,10 @@ var log_img;
 var log_2_img;
 var car_img;
 var car_5_img;
+var is_menu;
+var is_button = true;
+var is_button = false;
+var button;
 
 var grid_size = 50;
 
@@ -25,6 +29,7 @@ function preload() {
   log_1_img = loadImage('imgs/log_100.png');
   car_img = loadImage('imgs/car.png');
   car_5_img = loadImage('imgs/car_5.png');
+  is_menu = true
 }
 
 // p5js setup function, ran on page load.
@@ -47,24 +52,38 @@ function setup() {
 
 // p5js draw function, ran on every frame.
 function draw() {
-  background(0, 155, 155, 200);
+  if (is_menu === true) {
+    if (is_button === false) {
+      button = createButton('Iniciar');
+      button.position(0, 0);
+      is_button = true;
+    } else {
+      button.mousePressed(function () {
+        is_menu = false;
+        button.remove();
+      });
+    }
+    background(0);
+  } else {
+    background(0, 155, 155, 200);
 
-  var intersects = null;
+    var intersects = null;
 
-  for(var i = 0; i < rows.length; i++) {
-    rows[i].show(log_img, log_2_img, log_1_img, car_img, car_5_img);
-    rows[i].update();
-    if(frog.intersects(rows[i])) {
-      intersects = rows[i].hits(frog);
-      if((intersects !== null) ^ rows[i].inverted) {
-        resetGame();
+    for(var i = 0; i < rows.length; i++) {
+      rows[i].show(log_img, log_2_img, log_1_img, car_img, car_5_img);
+      rows[i].update();
+      if(frog.intersects(rows[i])) {
+        intersects = rows[i].hits(frog);
+        if((intersects !== null) ^ rows[i].inverted) {
+          resetGame();
+        }
       }
     }
-  }
 
-  frog.attach(intersects);
-  frog.update();
-  frog.show(frog_img);
+    frog.attach(intersects);
+    frog.update();
+    frog.show(frog_img);
+  }
 }
 
 // p5js key pressed function, runs when any key is pressed on the keyboard
@@ -78,5 +97,9 @@ function keyPressed() {
     frog.move(-grid_size, 0);
   } else if(keyCode === RIGHT_ARROW) {
     frog.move(grid_size, 0);
+  } else if(keyCode === ESCAPE) {
+    is_menu = true;
+    is_button = false;
+    draw(is_menu);
   }
 }
