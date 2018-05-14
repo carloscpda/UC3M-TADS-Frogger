@@ -12,6 +12,7 @@ var is_menu;
 var is_button = true;
 var is_button = false;
 var button;
+var game_over = false;
 
 var grid_size = 50;
 
@@ -64,6 +65,23 @@ function draw() {
       });
     }
     background(0);
+  } else if (game_over) {
+    background(50);
+    textSize(32);
+    fill(255);
+    text("GAME OVER", 50, 200);
+    if (is_button === false) {
+      button = createButton('Iniciar');
+      button.position(0, 0);
+      is_button = true;
+    } else {
+      button.mousePressed(function () {
+        game_over = false;
+        is_menu = false;
+        button.remove();
+        resetGame();
+      });
+    }
   } else {
     background(0, 155, 155, 200);
 
@@ -75,7 +93,8 @@ function draw() {
       if(frog.intersects(rows[i])) {
         intersects = rows[i].hits(frog);
         if((intersects !== null) ^ rows[i].inverted) {
-          resetGame();
+          game_over = true;
+          is_button = false;
         }
       }
     }
