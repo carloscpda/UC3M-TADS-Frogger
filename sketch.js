@@ -13,6 +13,9 @@ var is_button = true;
 var is_button = false;
 var button;
 var game_over = false;
+var winner = false;
+var start_time = 0;
+var end_time = 0;
 
 var grid_size = 50;
 
@@ -21,6 +24,7 @@ var rows = [];
 // Handles game reset if the frog dies, or at the initial load.
 function resetGame() {
   frog = new Frog(width / 2, height - grid_size, grid_size);
+  start_time = performance.now();
 }
 
 function preload() {
@@ -61,10 +65,14 @@ function draw() {
     } else {
       button.mousePressed(function () {
         is_menu = false;
+        is_button = false;
         button.remove();
       });
     }
-    background(0);
+    background(50);
+    textSize(32);
+    fill(255);
+    text("PAUSE", 50, 200);
   } else if (game_over) {
     background(50);
     textSize(32);
@@ -78,6 +86,30 @@ function draw() {
       button.mousePressed(function () {
         game_over = false;
         is_menu = false;
+        is_button = false;
+        button.remove();
+        resetGame();
+      });
+    }
+  } else if (winner) {
+    background(50);
+    textSize(32);
+    fill(255);
+    text("WINNER WINNER CHICKEN DINNER!!", 50, 200, 480);
+    textSize(15);
+    fill(255);
+    text("Score: " + score(), 50, 400, 480);
+    console.log(is_button);
+    if (is_button === false) {
+      console.log("Entra aqui");
+      button = createButton('Iniciar');
+      button.position(0, 0);
+      is_button = true;
+    } else {
+      button.mousePressed(function () {
+        winner = false;
+        is_menu = false;
+        is_button = false;
         button.remove();
         resetGame();
       });
@@ -97,6 +129,11 @@ function draw() {
           is_button = false;
         }
       }
+    }
+
+    if (frog.y === 0 && winner === false) {
+      winner = true;
+      end_time = performance.now();
     }
 
     frog.attach(intersects);
@@ -121,4 +158,8 @@ function keyPressed() {
     is_button = false;
     draw(is_menu);
   }
+}
+
+function score() {
+  return 10000/Math.abs(start_time-end_time)*100;
 }
