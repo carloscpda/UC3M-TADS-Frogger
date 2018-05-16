@@ -178,7 +178,7 @@ window.onload = function() {
         rec = new Rectangle(x_rec, y_rec, r_width, r_height);
         rec.move(50,50);
         assert.deepEqual(rec.x, x_rec+50, "Passed");
-        assert.deepEqual(rec.y, y_rec+50, "Passed");
+        assert.deepEqual(rec.y, 0, "Passed");
     });
     QUnit.test( "PS-132: Rectangle movement x out of bounds", function( assert ) {
         x_rec = width/2;
@@ -198,7 +198,7 @@ window.onload = function() {
         r_height = grid_size;
         rec = new Rectangle(x_rec, y_rec, r_width, r_height);
         rec.move(0,1000);
-        assert.deepEqual(rec.y, grid_size*9, "Passed");
+        assert.deepEqual(rec.y, 0, "Passed");
         rec.move(0,-2000);
         assert.deepEqual(rec.y, 0, "Passed");
     });
@@ -210,7 +210,7 @@ window.onload = function() {
         rec = new Rectangle(x_rec, y_rec, r_width, r_height);
         rec.move(1000,1000);
         assert.deepEqual(rec.x, x_rec + 1000, "Passed");
-        assert.deepEqual(rec.y, grid_size*9, "Passed");
+        assert.deepEqual(rec.y, 0, "Passed");
         rec.move(-2000, -2000);
         assert.deepEqual(rec.x, x_rec + 1000 - 2000, "Passed");
         assert.deepEqual(rec.y, 0, "Passed");
@@ -292,12 +292,12 @@ window.onload = function() {
         assert.deepEqual(obs.x, -150, "Passed");
         obs = new Obstacle(-149, 3 * grid_size, 100, grid_size, -2);
         obs.update();
-        assert.deepEqual(obs.x, 550, "Passed");
+        assert.deepEqual(obs.x, 150, "Passed");
     });
     QUnit.test( "PS-322: Obstacle update inside screen", function( assert ) {
         obs = new Obstacle(547, 3 * grid_size, 100, grid_size, 2);
         obs.update();
-        assert.deepEqual(obs.x, 549, "Passed");
+        assert.deepEqual(obs.x, -150, "Passed");
     });
 
 
@@ -311,29 +311,29 @@ window.onload = function() {
         assert.deepEqual(obs.h, grid_size, "Passed");
         assert.deepEqual(obs.speed, 1.3, "Passed");
     });
-    QUnit.test( "PS-312: Platform constructor with negative speed", function( assert ) {
+    QUnit.test( "PS-412: Platform constructor with negative speed", function( assert ) {
         obs = new Platform(0, 3 * grid_size, 100, grid_size, -1.3);
         assert.deepEqual(obs.speed, -1.3, "Passed");
     });
 
-    QUnit.test( "PS-321: Platform update out off screen", function( assert ) {
+    QUnit.test( "PS-421: Platform update out off screen", function( assert ) {
         obs = new Platform(549, 3 * grid_size, 100, grid_size, 2);
         obs.update();
         assert.deepEqual(obs.x, -150, "Passed");
         obs = new Platform(-149, 3 * grid_size, 100, grid_size, -2);
         obs.update();
-        assert.deepEqual(obs.x, 550, "Passed");
+        assert.deepEqual(obs.x, 150, "Passed");
     });
-    QUnit.test( "PS-322: Platform update inside screen", function( assert ) {
+    QUnit.test( "PS-422: Platform update inside screen", function( assert ) {
         obs = new Platform(547, 3 * grid_size, 100, grid_size, 2);
         obs.update();
-        assert.deepEqual(obs.x, 549, "Passed");
+        assert.deepEqual(obs.x, -150, "Passed");
     });
 
 
 // SafeArea class test
     QUnit.module('MOD-500: Sefearea class test');
-    QUnit.test( "PS-311: Safearea constructor all ok", function( assert ) {
+    QUnit.test( "PS-511: Safearea constructor all ok", function( assert ) {
         obs = new SafeArea(0, 3 * grid_size, 100, grid_size, 1.3);
         assert.deepEqual(obs.x, 0, "Passed");
         assert.deepEqual(obs.y, 3 * grid_size, "Passed");
@@ -341,23 +341,23 @@ window.onload = function() {
         assert.deepEqual(obs.h, grid_size, "Passed");
         assert.deepEqual(obs.speed, 1.3, "Passed");
     });
-    QUnit.test( "PS-312: Safearea constructor with negative speed", function( assert ) {
+    QUnit.test( "PS-512: Safearea constructor with negative speed", function( assert ) {
         obs = new SafeArea(0, 3 * grid_size, 100, grid_size, -1.3);
         assert.deepEqual(obs.speed, -1.3, "Passed");
     });
 
-    QUnit.test( "PS-321: Safearea update out off screen", function( assert ) {
+    QUnit.test( "PS-521: Safearea update out off screen", function( assert ) {
         obs = new SafeArea(549, 3 * grid_size, 100, grid_size, 2);
         obs.update();
         assert.deepEqual(obs.x, -150, "Passed");
         obs = new SafeArea(-149, 3 * grid_size, 100, grid_size, -2);
         obs.update();
-        assert.deepEqual(obs.x, 550, "Passed");
+        assert.deepEqual(obs.x, 150, "Passed");
     });
-    QUnit.test( "PS-322: Safearea update inside screen", function( assert ) {
+    QUnit.test( "PS-522: Safearea update inside screen", function( assert ) {
         obs = new SafeArea(547, 3 * grid_size, 100, grid_size, 2);
         obs.update();
-        assert.deepEqual(obs.x, 549, "Passed");
+        assert.deepEqual(obs.x, -150, "Passed");
     });
 
 
@@ -402,7 +402,7 @@ window.onload = function() {
         obs = new Obstacle(250, 3 * grid_size, 100, grid_size, 2);
         t_frog.attach(obs);
         t_frog.update();
-        assert.deepEqual(t_frog.x, width/2 + 2, "Passed");
+        assert.deepEqual(t_frog.x, width/2 , "Passed");
     });
 
     QUnit.test( "PS-622: Frog out of bounds update with attach object", function( assert ) {
@@ -430,6 +430,7 @@ window.onload = function() {
     QUnit.module('MOD-700: Sketch class test');
 
     QUnit.test( "PS-711: Reset Game", function( assert ) {
+        setup();
         assert.deepEqual(frog.x, width/2, "Passed");
         assert.deepEqual(frog.y, height - grid_size, "Passed");
         assert.deepEqual(frog.w, grid_size, "Passed");
@@ -452,9 +453,10 @@ window.onload = function() {
     });
 
     QUnit.test( "PS-732: Draw with frog eliminated", function( assert ) {
+        setup();
         frog.move(-width/2 + 90, -grid_size);
         draw();
-        assert.deepEqual(frog.y, height-grid_size, "Passed");
+        assert.deepEqual(frog.y, height-2*grid_size, "Passed");
     });
 
     onkeydown = test_keyPress;
