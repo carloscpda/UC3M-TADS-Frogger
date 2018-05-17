@@ -16,6 +16,8 @@ var game_over = false;
 var winner = false;
 var start_time = 0;
 var end_time = 0;
+var lifes = 3;
+var life_img;
 
 var grid_size = 50;
 
@@ -25,7 +27,17 @@ var rows = [];
 function resetGame() {
   frog = new Frog(width / 2, height - grid_size, grid_size);
   start_time = performance.now();
+  lifes = 3;
+  heart1 = new Heart(0, 0, 50);
+  heart2 = new Heart(0, 50, 50)
+  heart3 = new Heart(0, 100, 50)
 }
+function startAgain() {
+  frog = new Frog(width / 2, height - grid_size, grid_size);
+  lifes--;
+  game_over = false;
+}
+
 
 function preload() {
   frog_img = loadImage('imgs/frog.png');
@@ -34,6 +46,7 @@ function preload() {
   log_1_img = loadImage('imgs/log_100.png');
   car_img = loadImage('imgs/car.png');
   car_5_img = loadImage('imgs/car_5.png');
+  life_img = loadImage('imgs/life.png');
   is_menu = true
 }
 
@@ -74,22 +87,25 @@ function draw() {
     fill(255);
     text("PAUSE", 50, 200);
   } else if (game_over) {
-    background(50);
-    textSize(32);
-    fill(255);
-    text("GAME OVER", 50, 200);
-    if (is_button === false) {
-      button = createButton('Iniciar');
-      button.position(0, 0);
-      is_button = true;
-    } else {
-      button.mousePressed(function () {
-        game_over = false;
-        is_menu = false;
-        is_button = false;
-        button.remove();
-        resetGame();
-      });
+    if (lifes > 0) startAgain();
+    else {
+      background(50);
+      textSize(32);
+      fill(255);
+      text("GAME OVER", 50, 200);
+      if (is_button === false) {
+        button = createButton('Iniciar');
+        button.position(0, 0);
+        is_button = true;
+      } else {
+        button.mousePressed(function () {
+          game_over = false;
+          is_menu = false;
+          is_button = false;
+          button.remove();
+          resetGame();
+        });
+      }
     }
   } else if (winner) {
     background(50);
@@ -139,6 +155,9 @@ function draw() {
     frog.attach(intersects);
     frog.update();
     frog.show(frog_img);
+    if (lifes > 0) heart1.show(life_img)
+    if (lifes > 1) heart2.show(life_img)
+    if (lifes > 2) heart3.show(life_img)
   }
 }
 
